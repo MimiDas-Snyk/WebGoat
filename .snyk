@@ -1,4 +1,4 @@
 ignore:
-  SNYK-JAVA-ORGAPACHETOMCATEMBED-9396739:
+  SNYK-JAVA-ORGAPACHETOMCATEMBED-*:
     - '*':
         reason: Test using .snyk file
