@@ -15,4 +15,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+@RestController
+@AssignmentHints({
+  "path-traversal-profile.hint1",
+  "path-traversal-profile.hint2",
+  "path-traversal-profile.hint3"
+})
+public class ProfileUpload extends ProfileUploadBase {
 
+  public ProfileUpload(@Value("${webgoat.server.directory}") String webGoatHomeDirectory) {
+    super(webGoatHomeDirectory);
+  }
+
+  @PostMapping(
+      value = "/PathTraversal/profile-upload",
+      consumes = ALL_VALUE,
+      produces = APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public AttackResult uploadFileHandler(
+      @RequestParam("uploadedFile") MultipartFile file,
+      @RequestParam(value = "fullName", required = false) String fullName,
+      @CurrentUsername String username) {
+    return super.execute(file, fullName, username);
+  }
+
+  @GetMapping("/PathTraversal/profile-picture")
+  @ResponseBody
+  public ResponseEntity<?> getProfilePicture(@CurrentUsername String username) {
+    return super.getProfilePicture(username);
+  }
+}
